@@ -1,15 +1,14 @@
 using UnityEngine;
 
-public class Key : MonoBehaviour
+public class Key : MonoBehaviour, ICollectable
 {
-    void OnTriggerEnter2D(Collider2D other)
+    private bool collected = false;
+
+    public void Collect(PlayerInventory inventory)
     {
-        if (!other.CompareTag("Player")) return;
-
-        PlayerInventory inv = other.GetComponent<PlayerInventory>();
-        if (inv == null) return;
-
-        inv.AddKey();
+        if (collected) return;
+        collected = true;
+        inventory.AddKey();
         Destroy(gameObject);
     }
 }
