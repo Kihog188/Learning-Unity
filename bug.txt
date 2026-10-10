@@ -1,0 +1,1 @@
+Lỗi khi đứng góc tường map nhấn đi chéo bị kẹt chung với enemy khi bị tấn công
