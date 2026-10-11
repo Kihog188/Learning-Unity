@@ -19,8 +19,16 @@ public abstract class Enemy : MonoBehaviour
     }
 
     protected abstract void Move();
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player")) return;
 
-    void OnCollisionEnter2D(Collision2D collision)
+        if (other.TryGetComponent(out IDamageable target))
+        {
+            target.TakeDamage(contactDamage);
+        }
+    }
+    /*void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Player")) return;
 
@@ -28,5 +36,5 @@ public abstract class Enemy : MonoBehaviour
         {
             target.TakeDamage(contactDamage);
         }
-    }
+    }*/
 }
