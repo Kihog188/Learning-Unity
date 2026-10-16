@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -7,6 +8,9 @@ public class Health : MonoBehaviour, IDamageable
     [SerializeField] private float invincibleTime = 1f;
 
     public int Current { get; private set; }
+    public int MaxHealth => maxHealth;
+    public event Action<int, int> OnHealthChanged;
+    public event Action OnDied;
 
     private bool isInvincible = false;
     private SpriteRenderer sr;
@@ -22,11 +26,11 @@ public class Health : MonoBehaviour, IDamageable
         if (Current <= 0 || isInvincible) return;
 
         Current = Mathf.Max(Current - amount, 0);
-        Debug.Log($"Máu: {Current}/{maxHealth}");
+        OnHealthChanged?.Invoke(Current, maxHealth);
 
         if (Current == 0)
         {
-            Debug.Log("Thua!");
+            OnDied?.Invoke();
             gameObject.SetActive(false);
             return;
         }
